@@ -67,6 +67,11 @@ angular.module('ambrosia').controller('MainCtrl',
                     console.log('parts', $scope.params.pre, picked, $scope.params.post)
                     seSender.loadCustomMedia( ($scope.params.pre + picked + $scope.params.post).replace(/"/g, "") )
                   },
+                  loadTestYoutube : function () {
+                    //"http://www.youtube.com/embed/GlIzuTQGgzs"
+                    //<iframe width="854" height="480" src="https://www.youtube.com/embed/5RwhEHzuulA" frameborder="0" allowfullscreen></iframe>
+                    seSender.loadCustomMedia("http://www.youtube.com/embed/GlIzuTQGgzs")
+                  },
                   pickMedia : function (pick) {
                     var channel = $scope.params.allChannels[$scope.params.channel]
 

@@ -173,6 +173,7 @@ angular.module('ambrosia').service('seSender',
 	 */
 	function onInitSuccess() {
 	  appendMessage('init success');
+	  $rootScope.$broadcast('init');
 	}
 
 	/**
