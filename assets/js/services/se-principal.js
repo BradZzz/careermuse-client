@@ -4,7 +4,8 @@ function ($q, $http, $rootScope, Flash)
 {
   var _authenticated = false
 
-  var _identity = unknown_user = {
+  var _identity = null
+  var unknown_user = {
     photo : 'assets/img/test/test_logged_out.png',
     name : 'Logged Out',
     email : '',
