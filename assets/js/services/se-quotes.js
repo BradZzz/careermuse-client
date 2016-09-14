@@ -51,9 +51,7 @@ function ($http, $q, seLedger)
 
   function replaceList(list){
       return seLedger.getCountList().then(function(ledger){
-        console.log("ledger", ledger)
         return _.map(list,function(stock){
-            console.log("comparing: ", stock.sym)
             if (stock.sym in ledger) {
                 var meta = ledger[stock.sym]
                 stock.invested = meta.invested
