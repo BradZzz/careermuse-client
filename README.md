@@ -1,12 +1,12 @@
 ## Ambrosia
 
 ### Frameworks / Libraries
-NodeJS
-Angular
-LESS
-Gulp
-Material Design
-S3
+⋅⋅⋅NodeJS
+⋅⋅⋅Angular
+⋅⋅⋅LESS
+⋅⋅⋅Gulp
+⋅⋅⋅Material Design
+⋅⋅⋅S3
 
 ### Description
 
