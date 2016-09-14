@@ -22,13 +22,13 @@ A malleable framework allowing a user to quickly create their own website with a
 
 4. navigate to localhost:3000 in your browser
 
-### DotDash Screens
+### DotDash.tv Screens
 
 <img src="./screens/ark01.png" width="400"/>
 <img src="./screens/ark02.png" width="400"/>
 <img src="./screens/ark03.png" width="400"/>
 
-### HopShares Screens
+### HopShares.com Screens
 
 <img src="./screens/hopshares01.png" width="400"/>
 <img src="./screens/hopshares02.png" width="400"/>
