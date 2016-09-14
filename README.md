@@ -14,9 +14,12 @@ A malleable framework allowing a user to quickly create their own website with a
 
 ### Install
 
-1 . `npm install`
-2 . `bower install`
+1. `npm install`
+
+2. `bower install`
+
 3. `npm start`
+
 4. navigate to localhost:3000 in your browser
 
 ### DotDash Screens
