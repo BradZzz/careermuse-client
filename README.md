@@ -1,8 +1,8 @@
 ## Ambrosia
 
 ### Frameworks / Libraries
-⋅⋅⋅NodeJS
-⋅⋅⋅Angular
+⋅⋅⋅ NodeJS
+⋅⋅⋅ Angular
 ⋅⋅⋅LESS
 ⋅⋅⋅Gulp
 ⋅⋅⋅Material Design
