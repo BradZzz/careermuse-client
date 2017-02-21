@@ -3,19 +3,20 @@ angular.module('ambrosia').service('sePrincipal',
 function ($q, $http, $rootScope, Flash)
 {
   var _authenticated = false
+
   var _identity = null
   var unknown_user = {
-      photo : 'assets/img/test/test_logged_out.png',
-      name : 'Logged Out',
-      email : '',
-      gender : '',
-      address1 : '',
-      address2 : '',
-      city : '',
-      state : '',
-      zip : 00000,
-      background : 7,
-      fake : true,
+    photo : 'assets/img/test/test_logged_out.png',
+    name : 'Logged Out',
+    email : '',
+    gender : '',
+    address1 : '',
+    address2 : '',
+    city : '',
+    state : '',
+    zip : 00000,
+    background : 7,
+    fake : true,
   }
 
   var storageIndex = "hopShares.identity"
