@@ -60,10 +60,16 @@ onload = function() {
   mediaElement.addEventListener('loadstart', function(e) {
     console.log('######### MEDIA ELEMENT LOAD START');
     setDebugMessage('mediaElementState', 'Load Start');
+
+    var source = this.src;
+    if (source.indexOf("youtube.com") > -1) {
+        this.setAttribute("data-setup", '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "' + source + '"}]}')
+    }
   });
   mediaElement.addEventListener('loadeddata', function(e) {
     console.log('######### MEDIA ELEMENT DATA LOADED');
     setDebugMessage('mediaElementState', 'Data Loaded');
+
     var streamCount = protocol.getStreamCount();
     var streamInfo;
     var streamVideoCodecs;
@@ -93,8 +99,7 @@ onload = function() {
         streamAudioBitrates = streamInfo.bitrates;
         var audioLevel = protocol.getQualityLevel(c);
         setDebugMessage('streamAudioQuality', streamInfo.bitrates[audioLevel]);
-      }
-      else {
+      } else {
       }
     }
     setDebugMessage('streamCount', streamCount);

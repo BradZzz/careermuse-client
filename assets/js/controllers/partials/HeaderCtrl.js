@@ -1,11 +1,6 @@
 angular.module('ambrosia').controller('HeaderCtrl',
-<<<<<<< HEAD
 ['$scope', '$state', '$rootScope', '$timeout', '$mdSidenav', '$log', 'seMedia', 'seTheme', 'sePrincipal', 'seAuthorization',
 function ($scope, $state, $rootScope, $timeout, $mdSidenav, $log, seMedia, seTheme, sePrincipal, seAuthorization)
-=======
-['$scope', '$state', '$rootScope', '$timeout', '$mdSidenav', '$log', '$q', 'seQuotes', 'seTheme', 'sePrincipal', 'seAuthorization', 'seLedger',
-function ($scope, $state, $rootScope, $timeout, $mdSidenav, $log, $q, seQuotes, seTheme, sePrincipal, seAuthorization, seLedger)
->>>>>>> 8191297f97b907b19ed73d19550884c7c59c56bf
 {
   $scope.loginRegister = {
     isLoggingIn : true,
@@ -59,19 +54,11 @@ function ($scope, $state, $rootScope, $timeout, $mdSidenav, $log, $q, seQuotes, 
   $scope.ctrl = {
     simulateQuery : false,
     isDisabled : false,
+    states : [],
     querySearch : function (query) {
-        var self = this
-        console.log("query", query)
+        query = query.toLowerCase()
         if (query) {
-            var deferred = $q.defer()
-            seQuotes.getSearchCompany(query.toLowerCase()).then(function(results){
-                deferred.resolve( _.map(results, function(result){ return {
-                      display : result.name + " (" + result.symbol + ")",
-                      value : result.symbol.toLowerCase()
-                  }
-                }))
-            })
-            return deferred.promise
+            return _.filter($scope.ctrl.states, function(tick){ return tick.display.toLowerCase().indexOf(query) > -1 }).splice(0, 10)
         } else {
             return []
         }
@@ -92,7 +79,7 @@ function ($scope, $state, $rootScope, $timeout, $mdSidenav, $log, $q, seQuotes, 
         { icon : 'ion-android-home', text : 'Home', click : function(){$state.go('home')} },
         { icon : 'ion-folder', text : 'Profile', click : function(){$state.go('profile')} },
         { icon : 'ion-ios-pulse-strong', text : 'Analytics', click : function(){$state.go('analytics')} },
-        { icon : 'ion-ios-gear', text : 'Settings', click : function(){$state.go('settings')} },
+        { icon : 'ion-ios-gear', text : 'Settings', click : function(){console.log("clicked settings")} },
         { icon : 'ion-android-exit', text : 'Logout', click : function(){ $scope.loginRegister.logout() } },
     ],
     incBackground : function (offset) {
@@ -114,7 +101,6 @@ function ($scope, $state, $rootScope, $timeout, $mdSidenav, $log, $q, seQuotes, 
     $scope.loginRegister.refresh()
   })
 
-<<<<<<< HEAD
   //This runs once when the user refreshes the browser
   //seUser.recover(function(data){
   //    $scope.loginRegister.refresh()
@@ -123,21 +109,13 @@ function ($scope, $state, $rootScope, $timeout, $mdSidenav, $log, $q, seQuotes, 
   seMedia.getMedia().then(function(response){
       console.log('test list response: ', response)
       $scope.ctrl.states = _.map( seMedia.getSearchFormatted(response) , function (meta) {
-=======
-  /*seQuotes.getPendingList().then(function(response){
-      $scope.ctrl.states = _.map( response , function (tick) {
->>>>>>> 8191297f97b907b19ed73d19550884c7c59c56bf
          return {
            value: meta.value.toLowerCase(),
            display: meta.value,
            type: meta.type
          }
       })
-<<<<<<< HEAD
   })
-=======
-  })*/
->>>>>>> 8191297f97b907b19ed73d19550884c7c59c56bf
 
   $scope.toggleRight = buildToggler('left')
 
