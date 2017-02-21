@@ -7,6 +7,7 @@ var mediaSchema = new mongoose.Schema({
 	rated: {type: String},
 	path: {type: String, required: true},
 	type: {type: String, required: true},
+//	cached: {type: Boolean, default: false},
 	genre: [{ type: String },],
 	episodes: [{ type: String },],
 	runtime: { type: String },

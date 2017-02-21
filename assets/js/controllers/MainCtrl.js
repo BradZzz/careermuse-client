@@ -24,6 +24,7 @@ angular.module('ambrosia').controller('MainCtrl',
         sticky : false,
         newest : false,
         ordered : false,
+        pulseSkip: false,
         ordDirection : 1,
         progress : 0,
 
@@ -86,6 +87,8 @@ angular.module('ambrosia').controller('MainCtrl',
             seSenderHelper.params.sticky = $scope.params.sticky
             seSenderHelper.params.newest = $scope.params.newest
             seSenderHelper.params.ordered = $scope.params.ordered
+            seSenderHelper.params.pulseSkip = $scope.params.pulseSkip
+            seSenderHelper.ctrl.updateSender()
           }
         }
 

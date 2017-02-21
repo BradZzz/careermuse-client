@@ -13,7 +13,7 @@ var Q           = require('q')
 var _           = require('underscore')
 var request     = require('request')
 var Media       = require('../../models/media')
-var omdbApi     = require('omdb-client')
+//var omdbApi     = require('omdb-client')
 var utils       = require('../../lib/utils')
 
 var AWS = require('aws-sdk')
@@ -89,6 +89,9 @@ module.exports = function (app) {
       return res.status(200).json({ pre : process.env.MEDIA_PREFIX, post : process.env.MEDIA_POSTFIX })
     })
 
+    /***
+    TODO: omdbapi is down permanently. Need to find replacement!
+    ***/
     app.get('/cast/media/episode', function (req, res) {
         console.log(req.query)
         if ('name' in req.query && 'season' in req.query && 'episode' in req.query) {
@@ -97,20 +100,24 @@ module.exports = function (app) {
                 season: req.query.season,
                 episode: req.query.episode
             }
-            omdbApi.get(params, function(err, data) {
-                if (err) {
-                  console.log(err)
-                  return res.status(500).json(err)
-                } else {
-                  //console.log(data)
-                  //console.log(utils.isJSON(data))
-                  if (utils.isJSON(data)) {
-                    return res.status(200).json(data)
-                  } else {
-                    return res.status(500).json({ data : data })
-                  }
-                }
-            })
+
+            return res.status(200).json({ data : params })
+
+//            omdbApi.get(params, function(err, data) {
+//                if (err) {
+//                  console.log(err)
+//                  return res.status(500).json(err)
+//                } else {
+//                  //console.log(data)
+//                  //console.log(utils.isJSON(data))
+//                  if (utils.isJSON(data)) {
+//                    return res.status(200).json(data)
+//                  } else {
+//                    return res.status(500).json({ data : data })
+//                  }
+//                }
+//            })
+
             /*var url = 'http://www.omdbapi.com/?t=' + params.title.replace(' ','%20') + "&Season=" + params.season + "&Episode=" + params.episode + '&r=json&v=1'
             console.log(url)
             request(url, function(error, response, html){
@@ -126,33 +133,6 @@ module.exports = function (app) {
             return res.status(400).json("Request doesn't contain all necessary parameters")
         }
     })
-
-    function requestMeta(media) {
-        var deferred = Q.defer()
-        console.log(media)
-        var params = {
-            title: media.name.replace(/_/g, '+').capitalize(),
-            plot: 'short',
-            r: 'json',
-        }
-        omdbApi.get(params, function(err, data) {
-            if (err) {
-              console.log(err)
-              deferred.resolve(media)
-            } else {
-              media.poster = data.Poster
-              media.plot = data.Plot
-              media.genre = data.Genre.replace(/\s/g, '').split(",")
-              media.imdbRating = (data.imdbRating === "N/A" ? 0 : data.imdbRating)
-              media.imdbId = data.imdbID
-              media.year = data.Year
-              media.runtime = data.Runtime
-              media.rated = data.Rated
-            }
-            deferred.resolve(media)
-        })
-        return deferred.promise
-    }
 
     app.get('/cast/media', function (req, res) {
       Media.find({}).exec(function (err, media) {
@@ -190,7 +170,7 @@ module.exports = function (app) {
     	  })
     	  Q.all(promises).then(function(result) {
     	    console.log('finished save')
-    		return res.status(200).json(results)
+    		return res.status(200).json(_.filter(result, function(file){ return !file["poster"] }))
     	  }, function(err) {
     		return res.status(500).json({ debug: err })
     	  })
@@ -201,9 +181,9 @@ module.exports = function (app) {
     })
 
     function save(result){
-        if (result.poster === "") {
+        if (!result["poster"]) {
           console.log('bad value')
-          console.log(result)
+          console.log(result.name)
         }
         return Media.findOneAndUpdate({'name':result.name}, result, {upsert:true}).exec()
     }
@@ -260,6 +240,7 @@ module.exports = function (app) {
     }
 
     function checkMedia(mediaObject, episodes){
+        var deferred = Q.defer()
         var media = {}
         media.path = mediaObject.Prefix
         media.type = mediaObject.Prefix.indexOf('movie') > -1 ? 'movie' : 'tv'
@@ -267,33 +248,60 @@ module.exports = function (app) {
         media.episodes = _.map(episodes, function(episode){
           return episode.Prefix
         })
-        return requestMeta(media)
+
+        Media.findOne({path : media.path, type : media.type}).exec(function (err, cached) {
+          if (cached && cached["poster"]){
+            if (cached["episodes"] && media["episodes"] && media["episodes"] != cached["episodes"]) {
+                cached["episodes"] = media["episodes"]
+                //cached.cached = false
+            } /*else {
+                cached.cached = true
+            }*/
+            deferred.resolve(cached)
+          } else {
+            //media.cached = false
+            deferred.resolve(requestMeta(media))
+          }
+        })
+        return deferred.promise
     }
 
+    /***
+    TODO: omdbapi is down permanently. Need to find replacement!
+    TODO: For now update the meta manually
+    ***/
     function requestMeta(media) {
         var deferred = Q.defer()
-        console.log(media)
-        var params = {
-            title: media.name.replace(/_/g, '+').capitalize(),
-            plot: 'short',
-            r: 'json',
-        }
-        omdbApi.get(params, function(err, data) {
-            if (err) {
-              console.log(err)
-              deferred.resolve(media)
-            } else {
-              media.poster = data.Poster
-              media.plot = data.Plot
-              media.genre = data.Genre.replace(/\s/g, '').split(",")
-              media.imdbRating = (data.imdbRating === "N/A" ? 0 : data.imdbRating)
-              media.imdbId = data.imdbID
-              media.year = data.Year
-              media.runtime = data.Runtime
-              media.rated = data.Rated
-            }
-            deferred.resolve(media)
-        })
+
+//        console.log("Looking up media")
+//        console.log(media)
+//        var params = {
+//            title: media.name.replace(/_/g, '+').capitalize(),
+//            plot: 'short',
+//            r: 'json',
+//        }
+//        try{
+//            omdbApi.get(params, function(err, data) {
+//                if (err) {
+//                  //console.log(err)
+//                  deferred.resolve(media)
+//                } else {
+//                  media.poster = data.Poster
+//                  media.plot = data.Plot
+//                  media.genre = data.Genre.replace(/\s/g, '').split(",")
+//                  media.imdbRating = (data.imdbRating === "N/A" ? 0 : data.imdbRating)
+//                  media.imdbId = data.imdbID
+//                  media.year = data.Year
+//                  media.runtime = data.Runtime
+//                  media.rated = data.Rated
+//                }
+//                deferred.resolve(media)
+//            })
+//        }catch(err){
+//            //console.log(err)
+//            deferred.resolve(media)
+//        }
+        deferred.resolve(media)
         return deferred.promise
     }
 }

@@ -15,6 +15,7 @@ angular.module('ambrosia').service('seSenderHelper',
         sticky : false,
         newest : false,
         ordered : false,
+        pulseSkip : false,
         ordDirection : 1,
         volume : 80,
 
@@ -156,16 +157,34 @@ angular.module('ambrosia').service('seSenderHelper',
                      },
                      rCast : function() {
                        seMedia.getMediaUpdate().then(function(data){
+//
+//                         var redirectTab = window.open("data:text/json," + encodeURIComponent(data),"_blank")
+//                         redirectTab.location
+
+                         //var myjson = JSON.stringify(json, null, 2);
+//                         console.log(data);
+//                         var x = window.open();
+//                         x.document.open();
+//                         x.document.write('<html><body><pre>' + data + '</pre></body></html>');
+//                         x.document.close();
+                         window.open('data:application/json,'
+                            +JSON.stringify(data).replace(/([[{,])/g, "$1%0a"),
+                            'jsonFrame',
+                            'resizeable,top=100, left=100, height=200, width=300,status=1')
+
+                         console.log(data)
+
                          if ('getMedia' in seMedia.cache) {
                            delete seMedia.cache['getMedia']
                          }
-                         load()
+                         self.params.loaded = false
+                         self.load()
                        })
                      },
                      setV : function(vol){
                        console.log('volume', vol)
                        self.params.volume = vol
-                       seSender.setReceiverVolume(self.params.volume / 100, false)
+                       seSender.setRzeceiverVolume(self.params.volume / 100, false)
                      },
                      episodeFormatted : function (path) {
                        var pFormatted = path.substring(path.substring(0, path.length -1).lastIndexOf('/') + 1, path.length -1 )
@@ -192,6 +211,10 @@ angular.module('ambrosia').service('seSenderHelper',
                          seSender.launchApp()
                        }
                        self.params.casting = !self.params.casting
+                     },
+                     updateSender : function(){
+                        console.log('pulse', self.params.pulseSkip)
+                        seSender.setSkipPulse(self.params.pulseSkip)
                      }
                    }
                    self.params.loaded = true

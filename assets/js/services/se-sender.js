@@ -9,6 +9,7 @@ angular.module('ambrosia').service('seSender',
         this.playMedia = function(dir) {}
         this.setReceiverVolume = function(vol) {}
         this.seekMedia = function(pos) {}
+        this.setSkipPulse = function(set){}
         this.stopApp = function() { alert('You need a chromecast compatible browser to use ArkTV\'s network functionality') }
         this.launchApp = function() { alert('You need a chromecast compatible browser to use ArkTV\'s network functionality') }
     } else {
@@ -108,6 +109,11 @@ angular.module('ambrosia').service('seSender',
          * Application ID
          */
         var applicationID = '72A3C8A4';
+
+        /**
+        * Skip Pulse
+        **/
+        var skipPulse = false;
 
         /**
          * Current media session
@@ -536,6 +542,10 @@ angular.module('ambrosia').service('seSender',
           showCodeSnippet(code, 'receiver');
         }
 
+        this.setSkipPulse = function(set){
+            skipPulse = set
+        }
+
         /**
          * callback on success for loading media
          * @param {string} how A message string from callback
@@ -546,10 +556,13 @@ angular.module('ambrosia').service('seSender',
           appendMessage('new media session ID:' + mediaSession.mediaSessionId + ' (' + how + ')');
           currentMedia = mediaSession;
           mediaSession.addUpdateListener(onMediaStatusUpdate);
-          mediaCurrentTime = currentMedia.currentTime;
-          //if (!timer) {
-          timer = setInterval(updateCurrentTime, PROGRESS_BAR_UPDATE_DELAY);
-          //}
+          if (!skipPulse) {
+            mediaCurrentTime = currentMedia.currentTime;
+            timer = setInterval(updateCurrentTime, PROGRESS_BAR_UPDATE_DELAY);
+          } else {
+            //Between 15 and 75 percent progress
+            sMedia(Math.floor((Math.random() * 60) + 15))
+          }
         }
 
         /**
@@ -583,7 +596,7 @@ angular.module('ambrosia').service('seSender',
             $rootScope.$broadcast('update', currentMedia);
             if (!isAlive && currentMedia.idleReason !== 'INTERRUPTED') {
               thisRetry = 0
-                $rootScope.$broadcast('finish');
+              $rootScope.$broadcast('finish');
             }
           }
         }
@@ -599,9 +612,9 @@ angular.module('ambrosia').service('seSender',
          * @this playMedia
          */
         this.playMedia = function(pause) {
-              if (!currentMedia) {
-                return;
-              }
+            if (!currentMedia) {
+              return;
+            }
 
             if (!pause) {
               if (timer) {
@@ -865,13 +878,7 @@ angular.module('ambrosia').service('seSender',
           }
         }
 
-        /**
-         * seek media position
-         * @param {Number} pos A number to indicate percent
-         * @this seekMedia
-         */
-        this.seekMedia = function(pos) {
-
+        function sMedia(pos){
           if (timer) {
             clearInterval(timer);
           }
@@ -879,7 +886,7 @@ angular.module('ambrosia').service('seSender',
           console.log('Seeking ' + currentMedia.sessionId + ':' + currentMedia.mediaSessionId + ' to ' + pos + '%');
           progressFlag = 0;
           var request = new chrome.cast.media.SeekRequest();
-          request.currentTime = pos * currentMedia.media.duration / 100;
+          request.currentTime = (pos * currentMedia.media.duration) / 100;
           request.resumeState = chrome.cast.media.PlayerState.PLAYBACK_START;
           currentMedia.seek(request,onSeekSuccess.bind(this, 'media seek done'),onError);
 
@@ -893,6 +900,15 @@ angular.module('ambrosia').service('seSender',
                '  }\n' +
                '  // Watch \'Media Player State\' in receiver debug message';
           showCodeSnippet(code, 'receiver');
+        }
+
+        /**
+         * seek media position
+         * @param {Number} pos A number to indicate percent
+         * @this seekMedia
+         */
+        this.seekMedia = function(pos) {
+          sMedia(pos)
         }
 
         this.getCurrentMedia = function(){
