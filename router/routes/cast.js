@@ -13,7 +13,7 @@ var Q           = require('q')
 var _           = require('underscore')
 var request     = require('request')
 var Media       = require('../../models/media')
-//var omdbApi     = require('omdb-client')
+var omdbApi     = require('omdb-client')
 var utils       = require('../../lib/utils')
 
 var AWS = require('aws-sdk')
@@ -101,34 +101,22 @@ module.exports = function (app) {
                 episode: req.query.episode
             }
 
-            return res.status(200).json({ data : params })
+            //return res.status(200).json({ data : params })
 
-//            omdbApi.get(params, function(err, data) {
-//                if (err) {
-//                  console.log(err)
-//                  return res.status(500).json(err)
-//                } else {
-//                  //console.log(data)
-//                  //console.log(utils.isJSON(data))
-//                  if (utils.isJSON(data)) {
-//                    return res.status(200).json(data)
-//                  } else {
-//                    return res.status(500).json({ data : data })
-//                  }
-//                }
-//            })
-
-            /*var url = 'http://www.omdbapi.com/?t=' + params.title.replace(' ','%20') + "&Season=" + params.season + "&Episode=" + params.episode + '&r=json&v=1'
-            console.log(url)
-            request(url, function(error, response, html){
-                console.log(response.body)
-                if (error) {
-                  console.log(error)
+            omdbApi.get(params, function(err, data) {
+                if (err) {
+                  console.log(err)
                   return res.status(500).json(err)
                 } else {
-                  return res.status(200).json(response.body)
+                  //console.log(data)
+                  //console.log(utils.isJSON(data))
+                  if (utils.isJSON(data)) {
+                    return res.status(200).json(data)
+                  } else {
+                    return res.status(500).json({ data : data })
+                  }
                 }
-            })*/
+            })
         } else {
             return res.status(400).json("Request doesn't contain all necessary parameters")
         }
@@ -273,35 +261,34 @@ module.exports = function (app) {
     function requestMeta(media) {
         var deferred = Q.defer()
 
-//        console.log("Looking up media")
-//        console.log(media)
-//        var params = {
-//            title: media.name.replace(/_/g, '+').capitalize(),
-//            plot: 'short',
-//            r: 'json',
-//        }
-//        try{
-//            omdbApi.get(params, function(err, data) {
-//                if (err) {
-//                  //console.log(err)
-//                  deferred.resolve(media)
-//                } else {
-//                  media.poster = data.Poster
-//                  media.plot = data.Plot
-//                  media.genre = data.Genre.replace(/\s/g, '').split(",")
-//                  media.imdbRating = (data.imdbRating === "N/A" ? 0 : data.imdbRating)
-//                  media.imdbId = data.imdbID
-//                  media.year = data.Year
-//                  media.runtime = data.Runtime
-//                  media.rated = data.Rated
-//                }
-//                deferred.resolve(media)
-//            })
-//        }catch(err){
-//            //console.log(err)
-//            deferred.resolve(media)
-//        }
-        deferred.resolve(media)
+        console.log("Looking up media")
+        console.log(media)
+        var params = {
+            title: media.name.replace(/_/g, '+').capitalize(),
+            plot: 'short',
+            r: 'json',
+        }
+        try{
+            omdbApi.get(params, function(err, data) {
+                if (err) {
+                  //console.log(err)
+                  deferred.resolve(media)
+                } else {
+                  media.poster = data.Poster
+                  media.plot = data.Plot
+                  media.genre = data.Genre.replace(/\s/g, '').split(",")
+                  media.imdbRating = (data.imdbRating === "N/A" ? 0 : data.imdbRating)
+                  media.imdbId = data.imdbID
+                  media.year = data.Year
+                  media.runtime = data.Runtime
+                  media.rated = data.Rated
+                }
+                deferred.resolve(media)
+            })
+        }catch(err){
+            //console.log(err)
+            deferred.resolve(media)
+        }
         return deferred.promise
     }
 }
