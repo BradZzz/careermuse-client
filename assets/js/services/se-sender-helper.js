@@ -184,7 +184,7 @@ angular.module('ambrosia').service('seSenderHelper',
                      setV : function(vol){
                        console.log('volume', vol)
                        self.params.volume = vol
-                       seSender.setRzeceiverVolume(self.params.volume / 100, false)
+                       seSender.setReceiverVolume(self.params.volume / 100, false)
                      },
                      episodeFormatted : function (path) {
                        var pFormatted = path.substring(path.substring(0, path.length -1).lastIndexOf('/') + 1, path.length -1 )
