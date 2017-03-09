@@ -18,7 +18,7 @@ var app           = module.exports = express()
 
 app.storage = require('node-persist')
 
-var TOKEN_SECRET = process.env.TOKEN_SECRET
+var TOKEN_SECRET = process.env.TOKEN_SECRET || ""
 
 mongoose.connect(process.env.MONGODB)
 
