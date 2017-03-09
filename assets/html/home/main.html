@@ -11,6 +11,7 @@
 								<h3 style="color:white">{{ cat.name }}</h3>
 							</div>
 						</md-list-item>
+						<md-button ng-click="reset()" style="border: 1px #000000 solid; color:white; background: rgba(0,0,0,.2); position: absolute; bottom: 5em; left: 0; width: 100%; margin: 0; height: 5em;">Reset</md-button>
 						<md-button ng-click="submit()" style="border: 1px #000000 solid; color:white; background: #FF5722; position: absolute; bottom: 0; left: 0; width: 100%; margin: 0; height: 5em;">Save</md-button>
 					</md-list>
 				</div>
@@ -105,7 +106,7 @@
 								</md-input-container>
 							</md-card>
 						</div>
-						<div style="height: 70px;vmargin-top: 1.6em;">
+						<div style="height: 70px;vmargin-top: 1.6em;" ng-if="isArr(user[val])">
 							<md-button class="md-fab" style="float:right" ng-click="create(user[val])">
 								<span class="icon ion-plus selectable" style="z-index:1; color: white;"></span>
 							</md-button>

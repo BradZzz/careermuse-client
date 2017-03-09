@@ -251,6 +251,12 @@ angular.module('ambrosia').controller('MainCtrl',
       "order" : ",Summary,Skills,Employment,Education,Projects,Interests,Languages,Recognition,Governance,Volunteering,Speaking,Writing,Disposition"
     }
 
+    function copy(item) {
+      return JSON.parse(JSON.stringify(item))
+    }
+
+    var backup = copy($scope.user)
+
     $scope.categories = [
       {
         name : 'Personal',
@@ -316,7 +322,11 @@ angular.module('ambrosia').controller('MainCtrl',
       for (var key in base) {
         if (base.hasOwnProperty(key)) {
           if (this.isArr(base[key])) {
-            nBase[key] = [this.clear(base[key][0])]
+            if (base[key].length > 0) {
+              nBase[key] = [this.clear(base[key][0])]
+            } else {
+              nBase[key] = ""
+            }
           } else if (this.isObject(base[key])) {
             nBase[key] = this.clear(base[key])
           } else {
@@ -335,9 +345,13 @@ angular.module('ambrosia').controller('MainCtrl',
       }
     }
 
+    $scope.reset = function() {
+      $scope.user = copy(backup)
+    }
+
     $scope.destroy = function(item, idx) {
       if (idx > -1 && item.length > 1) {
-          item.splice(idx, 1);
+          item.splice(idx, 1)
       }
     }
 
