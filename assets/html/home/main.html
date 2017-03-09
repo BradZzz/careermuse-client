@@ -31,7 +31,7 @@
 							<div ng-if="isArr(user[val][key2]) && key2.capitalizeFirstLetter() != 'Other' && val.capitalizeFirstLetter() != 'Contact'">
 								<h3 ng-if="key2.capitalizeFirstLetter() != 'Sets' && val.capitalizeFirstLetter() != 'Skills'">{{ key2.capitalizeFirstLetter() }}</h3>
 								<md-card class="tiny-margin tiny-padding" ng-repeat="item in user[val][key2] track by $index">
-									<md-button style="width: 1em;">
+									<md-button style="width: 1em;" ng-click="destroy(user[val][key2], $index)">
 										<span class="icon ion-close selectable" style="z-index:1; float: left;"></span>
 									</md-button>
 
@@ -54,7 +54,7 @@
 									</md-input-container>
 								</md-card>
 								<div style="height: 70px;vmargin-top: 1.6em;">
-									<md-button class="md-fab" style="float:right">
+									<md-button class="md-fab" style="float:right" ng-click="create(user[val][key2])">
 										<span class="icon ion-plus selectable" style="z-index:1; color: white;"></span>
 									</md-button>
 								</div>
@@ -63,7 +63,7 @@
 						<div ng-repeat="ix in user[val] track by $index" ng-if="isArr(user[val])">
 							<md-card class="tiny-margin tiny-padding">
 								<!--<h3>{{ $index }}</h3>-->
-								<md-button style="width: 1em;">
+								<md-button style="width: 1em;" ng-click="destroy(user[val], $index)">
 									<span class="icon ion-close selectable" style="z-index:1; float:left;"></span>
 								</md-button>
 
@@ -104,11 +104,11 @@
 									<input ng-model="user[val][$parent.$index][$index]">
 								</md-input-container>
 							</md-card>
-							<div style="height: 70px;vmargin-top: 1.6em;">
-								<md-button class="md-fab" style="float:right">
-									<span class="icon ion-plus selectable" style="z-index:1; color: white;"></span>
-								</md-button>
-							</div>
+						</div>
+						<div style="height: 70px;vmargin-top: 1.6em;">
+							<md-button class="md-fab" style="float:right" ng-click="create(user[val])">
+								<span class="icon ion-plus selectable" style="z-index:1; color: white;"></span>
+							</md-button>
 						</div>
 					</div>
 				</div>

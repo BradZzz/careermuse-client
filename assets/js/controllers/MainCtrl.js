@@ -308,6 +308,37 @@ angular.module('ambrosia').controller('MainCtrl',
 
     $scope.submit = function() {
       console.log($scope.user)
+      alert(JSON.stringify($scope.user))
+    }
+
+    $scope.clear = function(base) {
+      var nBase = {}
+      for (var key in base) {
+        if (base.hasOwnProperty(key)) {
+          if (this.isArr(base[key])) {
+            nBase[key] = [this.clear(base[key][0])]
+          } else if (this.isObject(base[key])) {
+            nBase[key] = this.clear(base[key])
+          } else {
+            nBase[key] = ""
+          }
+        }
+      }
+      return nBase
+    }
+
+    $scope.create = function(item) {
+      if (this.isObject(item[0])) {
+        item.push(this.clear(item[0]))
+      } else {
+        item.push("")
+      }
+    }
+
+    $scope.destroy = function(item, idx) {
+      if (idx > -1 && item.length > 1) {
+          item.splice(idx, 1);
+      }
     }
 
     $scope.selected = 0
