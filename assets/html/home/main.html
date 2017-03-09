@@ -29,7 +29,7 @@
 							<!-- I'm not writing a recursive directive for work I do for free. That's no bueno territory. A directive should go here though... -->
 							<!-- Looking back on this. Should have written that directive... -->
 
-							<div ng-if="isArr(user[val][key2]) && key2.capitalizeFirstLetter() != 'Other' && val.capitalizeFirstLetter() != 'Contact'">
+							<div ng-if="isArr(user[val][key2]) && user[val][key2].length > 0 && key2.capitalizeFirstLetter() != 'Other' && val.capitalizeFirstLetter() != 'Contact'">
 								<h3 ng-if="key2.capitalizeFirstLetter() != 'Sets' && val.capitalizeFirstLetter() != 'Skills'">{{ key2.capitalizeFirstLetter() }}</h3>
 								<md-card class="tiny-margin tiny-padding" ng-repeat="item in user[val][key2] track by $index">
 									<md-button style="width: 1em;" ng-click="destroy(user[val][key2], $index)">
@@ -50,7 +50,7 @@
 										</md-input-container>
 									</div>
 
-									<md-input-container ng-if="isArr(item)" ng-repeat="val3 in item track by $index">
+									<md-input-container ng-if="isArr(item) && item.length > 0" ng-repeat="val3 in item track by $index">
 										<input ng-model="user[val][key2][$parent.$index][$index]">
 									</md-input-container>
 								</md-card>
@@ -61,7 +61,7 @@
 								</div>
 							</div>
 						</div>
-						<div ng-repeat="ix in user[val] track by $index" ng-if="isArr(user[val])">
+						<div ng-repeat="ix in user[val] track by $index" ng-if="isArr(user[val]) && user[val].length > 0">
 							<md-card class="tiny-margin tiny-padding">
 								<!--<h3>{{ $index }}</h3>-->
 								<md-button style="width: 1em;" ng-click="destroy(user[val], $index)">
@@ -83,7 +83,7 @@
 										</md-input-container>
 									</div>
 
-									<div ng-if="isArr(val3)">
+									<div ng-if="isArr(val3) && user[val].length > 0">
 										<h3>{{ key3.capitalizeFirstLetter() }}</h3>
 										<div class="large-margin" ng-repeat="val4 in val3 track by $index">
 											<md-input-container class="full" ng-if="!isArr(val4) && !isObject(val4)">
@@ -95,18 +95,18 @@
 												<input ng-model="user[val][$parent.$parent.$parent.$index][key3][$parent.$index][key5]">
 											</md-input-container>
 
-											<md-input-container ng-if="isArr(val4)" ng-repeat="val5 in val4 track by $index">
+											<md-input-container ng-if="isArr(val4) && val4.length > 0" ng-repeat="val5 in val4 track by $index">
 												<input ng-model="user[val][$parent.$parent.$parent.$index][key3][$parent.$index][$index]">
 											</md-input-container>
 										</div>
 									</div>
 								</div>
-								<md-input-container ng-if="isArr(ix)" ng-repeat="val3 in ix track by $index">
+								<md-input-container ng-if="isArr(ix) && ix.length > 0" ng-repeat="val3 in ix track by $index">
 									<input ng-model="user[val][$parent.$index][$index]">
 								</md-input-container>
 							</md-card>
 						</div>
-						<div style="height: 70px;vmargin-top: 1.6em;" ng-if="isArr(user[val])">
+						<div style="height: 70px;vmargin-top: 1.6em;" ng-if="isArr(user[val]) && ix.length > 0">
 							<md-button class="md-fab" style="float:right" ng-click="create(user[val])">
 								<span class="icon ion-plus selectable" style="z-index:1; color: white;"></span>
 							</md-button>

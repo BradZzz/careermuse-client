@@ -22,6 +22,11 @@ String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
 }
 
+Object.prototype.isEmpty = function() {
+    for (var prop in this) if (this.hasOwnProperty(prop)) return false;
+    return true;
+};
+
 var app = angular.module('ambrosia', modules)
 
 app.config(
