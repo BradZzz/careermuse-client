@@ -53,6 +53,7 @@
   <link rel="stylesheet" href="/assets/third-party/angular-material/angular-material.css">
   <link rel="stylesheet" href="/assets/third-party/angular-flash-alert/dist/angular-flash.css">
   <link rel="stylesheet" href="/assets/third-party/angular-material-icons/angular-material-icons.css">
+  <link rel="stylesheet" href="/assets/third-party/angular-material-expansion-panel/dist/md-expansion-panel.min.css">
   <!-- endbuild -->
 </head>
 
@@ -60,7 +61,6 @@
 
 <!-- angular view content injected here -->
 <flash-message duration="5000" show-close="true" on-dismiss="$root.flashCallback(flash)" class="flash-bar"></flash-message>
-<div id="navbar" ng-controller="HeaderCtrl"><div ng-include src="'assets/html/partials/header.html'"></div></div>
 <div class="loading-bar" ng-class="{'show' : $root.loading, 'remove' : !$root.loading}" layout="row" layout-sm="column" layout-align="space-around">
   <md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>
@@ -80,6 +80,7 @@
 <script src="/assets/third-party/angular-flash-alert/dist/angular-flash.js"></script>
 <script src="/assets/third-party/angular-material-icons/angular-material-icons.js"></script>
 <script src="/assets/third-party/angular-sanitize/angular-sanitize.js"></script>
+<script src="/assets/third-party/angular-material-expansion-panel/dist/md-expansion-panel.min.js"></script>
 
 <script src="/assets/third-party/moment/min/moment.min.js"></script>
 <script src="/assets/third-party/moment/min/locales.min.js"></script>
@@ -104,33 +105,9 @@
 <script src="/assets/js/app.js"></script>
 <script src="/assets/js/controllers/RootCtrl.js"></script>
 <script src="/assets/js/controllers/MainCtrl.js"></script>
-<script src="/assets/js/controllers/MediaCtrl.js"></script>
-<script src="/assets/js/controllers/ProfileCtrl.js"></script>
-<script src="/assets/js/controllers/AnalyticsCtrl.js"></script>
-<script src="/assets/js/controllers/LocalPlayerCtrl.js"></script>
-<script src="/assets/js/controllers/SettingsCtrl.js"></script>
-<script src="/assets/js/controllers/partials/HeaderCtrl.js"></script>
 
-<script src="/assets/js/directives/se-upload.js"></script>
-<script src="/assets/js/directives/se-timer.js"></script>
-
-<script src="/assets/js/services/se-authorization.js"></script>
-<script src="/assets/js/services/se-media.js"></script>
-<script src="/assets/js/services/se-ledger.js"></script>
-<script src="/assets/js/services/se-principal.js"></script>
-<script src="/assets/js/services/se-quotes.js"></script>
-<script src="/assets/js/services/se-static.js"></script>
-<script src="/assets/js/services/se-theme.js"></script>
-<script src="/assets/js/services/se-user.js"></script>
-<script src="/assets/js/services/se-sender.js"></script>
-<script src="/assets/js/services/se-sender-helper.js"></script>
+<script src="/assets/js/directives/se-collapse.js"></script>
 <!-- endbuild -->
-
-<!-- everything in lib shouldnt be minified -->
-<script src="/assets/js/lib/mpl.js"></script>
-
-<!-- external dependencies -->
-<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
 
 </body>
 </html>

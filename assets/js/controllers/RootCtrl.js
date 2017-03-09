@@ -64,7 +64,6 @@ function ($rootScope, $state, $stateParams, $timeout, cfpLoadingBar)
   })
 
   $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
-      console.log('here')
       // this is required if you want to prevent the $UrlRouter reverting the URL to the previous valid location
       event.preventDefault();
   })
