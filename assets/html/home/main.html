@@ -33,7 +33,7 @@
 								<h3 ng-if="key2.capitalizeFirstLetter() != 'Sets' && val.capitalizeFirstLetter() != 'Skills'">{{ key2.capitalizeFirstLetter() }}</h3>
 								<md-card class="tiny-margin tiny-padding" ng-repeat="item in user[val][key2] track by $index">
 									<md-button style="width: 1em;" ng-click="destroy(user[val][key2], $index)">
-										<span class="icon ion-close selectable" style="z-index:1; float: left;"></span>
+										<span class="icon ion-close selectable" style="z-index:1;"></span>
 									</md-button>
 
 									<div ng-if="!isArr(item) && !isObject(item)" class="tiny-padding">
@@ -65,7 +65,7 @@
 							<md-card class="tiny-margin tiny-padding">
 								<!--<h3>{{ $index }}</h3>-->
 								<md-button style="width: 1em;" ng-click="destroy(user[val], $index)">
-									<span class="icon ion-close selectable" style="z-index:1; float:left;"></span>
+									<span class="icon ion-close selectable" style="z-index:1;"></span>
 								</md-button>
 
 								<!-- user[val][$parent.$index] -->
