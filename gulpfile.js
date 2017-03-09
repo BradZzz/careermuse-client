@@ -54,8 +54,7 @@ gulp.task('minify', function() {
           errorHandler: onError
         }))
         .pipe($.useref())
-//        .pipe(gulpif('*.js', $.uglify()))
-        .pipe(gulp.src('*.js'))
+        .pipe(gulpif('*.js', $.uglify()))
         .on('error', function(){
           //do whatever here
         })
