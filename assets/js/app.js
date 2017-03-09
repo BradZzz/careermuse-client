@@ -7,7 +7,6 @@ var modules = [
   'angular-loading-bar',
   'ui.bootstrap',
   'ngFlash',
-  'ngFileUpload',
   'ngMdIcons',
   'ngSanitize'
 ]
