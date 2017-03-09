@@ -9,7 +9,7 @@ var session       = require('express-session')
 var dbStore       = require('connect-mongo')(session)
 var path          = require('path')
 var logger        = require('morgan')
-var mongoose      = require('mongoose')
+//var mongoose      = require('mongoose')
 var compression   = require('compression')
 var bodyParser    = require('body-parser')
 var utils         = require('./lib/utils')
@@ -18,9 +18,9 @@ var app           = module.exports = express()
 
 app.storage = require('node-persist')
 
-var TOKEN_SECRET = process.env.TOKEN_SECRET
+var TOKEN_SECRET = process.env.TOKEN_SECRET || "2awesome3secret4"
 
-mongoose.connect(process.env.MONGODB)
+//mongoose.connect(process.env.MONGODB)
 
 app.disable('x-powered-by')
 app.set('port', process.env.PORT || 3000)
@@ -65,7 +65,7 @@ app.use(session({
     resave: false,
     //Save sessions only if they have been modified
     saveUninitialized : false,
-    store: new dbStore({mongooseConnection: mongoose.connection})
+//    store: new dbStore({mongooseConnection: mongoose.connection})
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -73,7 +73,7 @@ app.use(passport.session())
 if (app.get('prod')) {
   app.use(logger())
 } else {
-  mongoose.set('debug', true)
+//  mongoose.set('debug', true)
   app.use(errorhandler())
   app.use(logger('dev'))
 }
