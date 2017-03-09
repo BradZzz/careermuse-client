@@ -52,15 +52,15 @@ function ($rootScope, $state, $stateParams) {
   })
 }])
 
-//app.config(['$mdThemingProvider',
-//function ($mdThemingProvider) {
-//  $mdThemingProvider.theme('default')
-//    .primaryPalette('blue')
-//    .accentPalette('orange')
-//    .backgroundPalette('grey', {
-//      'default': '50',
-//      'hue-1': '100',
-//      'hue-2': '100',
-//      'hue-3': '200'
-//    })
-//}]);
+app.config(['$mdThemingProvider',
+function ($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('blue')
+    .accentPalette('deep-orange')
+    .backgroundPalette('grey', {
+      'default': '50',
+      'hue-1': '100',
+      'hue-2': '100',
+      'hue-3': '200'
+    })
+}]);

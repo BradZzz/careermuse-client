@@ -555,8 +555,8 @@ form .progress {
   opacity: 1;
 }
 
-.border {
-
+.tiny-padding {
+  padding : 1em;
 }
 .tiny-margin {
   margin-left : 1em;
@@ -565,7 +565,7 @@ form .progress {
   margin-left : 3em;
 }
 .full {
-  width: 100%;
+  width: 95%;
 }
 .half-flex {
   width: 45%;

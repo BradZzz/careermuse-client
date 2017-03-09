@@ -11,7 +11,7 @@
 								<h3 style="color:white">{{ cat.name }}</h3>
 							</div>
 						</md-list-item>
-						<md-button style="border: 1px #000000 solid; color:white; background: #FF5722; position: absolute; bottom: 0; left: 0; width: 100%; margin: 0; height: 5em;">Save</md-button>
+						<md-button ng-click="submit()" style="border: 1px #000000 solid; color:white; background: #FF5722; position: absolute; bottom: 0; left: 0; width: 100%; margin: 0; height: 5em;">Save</md-button>
 					</md-list>
 				</div>
 				<div flex="80" style="color: #212121; background: white; height: 100%; padding: 10px 50px; overflow-y: auto;">
@@ -26,43 +26,59 @@
 							</md-input-container>
 
 							<!-- I'm not writing a recursive directive for work I do for free. That's no bueno territory. A directive should go here though... -->
+							<!-- Looking back on this. Should have written that directive... -->
 
-							<div ng-if="isArr(user[val][key2])">
-								<h3>{{ key2.capitalizeFirstLetter() }}</h3>
-								<md-card class="tiny-margin" ng-repeat="item in user[val][key2] track by $index" style="padding: 2em;">
-									<!--<h3>{{ $index }}</h3>-->
+							<div ng-if="isArr(user[val][key2]) && key2.capitalizeFirstLetter() != 'Other' && val.capitalizeFirstLetter() != 'Contact'">
+								<h3 ng-if="key2.capitalizeFirstLetter() != 'Sets' && val.capitalizeFirstLetter() != 'Skills'">{{ key2.capitalizeFirstLetter() }}</h3>
+								<md-card class="tiny-margin tiny-padding" ng-repeat="item in user[val][key2] track by $index">
+									<md-button style="width: 1em;">
+										<span class="icon ion-close selectable" style="z-index:1; float: left;"></span>
+									</md-button>
 
-									<md-input-container ng-if="!isArr(item) && !isObject(item)" class="full">
-										<label>{{ key2 }}</label>
-										<input ng-model="item">
-									</md-input-container>
+									<div ng-if="!isArr(item) && !isObject(item)" class="tiny-padding">
+										<md-input-container class="full">
+											<label>{{ key2 }}</label>
+											<input ng-model="user[val][key2][$index]">
+										</md-input-container>
+									</div>
 
-									<md-input-container ng-if="isObject(item) && !isArr(item)" ng-repeat="(key3,val3) in item track by $index">
-										<label>{{ key3 }}</label>
-										<input ng-model="val3">
-									</md-input-container>
+									<div ng-if="isObject(item) && !isArr(item)" style="padding-left:2em" ng-repeat="(keya,val3) in item track by $index">
+										<md-input-container class="full">
+											<label>{{ keya }}</label>
+											<input ng-model="user[val][key2][$parent.$parent.$index][keya]">
+										</md-input-container>
+									</div>
 
 									<md-input-container ng-if="isArr(item)" ng-repeat="val3 in item track by $index">
-										<input ng-model="val3">
+										<input ng-model="user[val][key2][$parent.$index][$index]">
 									</md-input-container>
 								</md-card>
+								<div style="height: 70px;vmargin-top: 1.6em;">
+									<md-button class="md-fab" style="float:right">
+										<span class="icon ion-plus selectable" style="z-index:1; color: white;"></span>
+									</md-button>
+								</div>
 							</div>
 						</div>
+						<div ng-repeat="ix in user[val] track by $index" ng-if="isArr(user[val])">
+							<md-card class="tiny-margin tiny-padding">
+								<!--<h3>{{ $index }}</h3>-->
+								<md-button style="width: 1em;">
+									<span class="icon ion-close selectable" style="z-index:1; float:left;"></span>
+								</md-button>
 
-						<div class="tiny-margin" ng-repeat="ix in user[val] track by $index" ng-if="isArr(user[val])">
-							<!--<h3>{{ $index }}</h3>-->
-							<div ng-if="isObject(ix) && !isArr(ix)">
-								<div ng-repeat="(key3,val3) in ix track by $index">
+								<!-- user[val][$parent.$index] -->
+								<div ng-if="isObject(ix) && !isArr(ix)" ng-repeat="(key3,val3) in ix" style="padding-left:2em">
 									<md-input-container class="full" ng-if="!isObject(val3) && !isArr(val3)">
 										<label>{{ key3 }}</label>
-										<input ng-model="val3">
+										<input ng-model="user[val][$parent.$parent.$parent.$index][key3]">
 									</md-input-container>
 
 									<div ng-if="isObject(val3) && !isArr(val3)">
 										<h3>{{ key3.capitalizeFirstLetter() }}</h3>
 										<md-input-container class="large-margin" ng-repeat="(key4,val4) in val3 track by $index">
 											<label>{{ key4 }}</label>
-											<input ng-model="val4">
+											<input ng-model="user[val][$parent.$parent.$index][key3][key4]">
 										</md-input-container>
 									</div>
 
@@ -70,27 +86,30 @@
 										<h3>{{ key3.capitalizeFirstLetter() }}</h3>
 										<div class="large-margin" ng-repeat="val4 in val3 track by $index">
 											<md-input-container class="full" ng-if="!isArr(val4) && !isObject(val4)">
-												<input ng-model="val4">
+												<input ng-model="user[val][$parent.$parent.$index][key3][$index]">
 											</md-input-container>
 
-											<md-input-container ng-repeat="(key5,val5) in val4 track by $index" ng-if="isObject(val4) && !isArr(val4)">
+											<md-input-container ng-repeat="(key5,val5) in val4 track by $index" ng-if="isObject(val4) && !isArr(val4)" class="tiny-padding half-flex">
 												<label>{{ key5 }}</label>
-												<input ng-model="val5">
+												<input ng-model="user[val][$parent.$parent.$parent.$index][key3][$parent.$index][key5]">
 											</md-input-container>
 
 											<md-input-container ng-if="isArr(val4)" ng-repeat="val5 in val4 track by $index">
-												<input ng-model="val5">
+												<input ng-model="user[val][$parent.$parent.$parent.$index][key3][$parent.$index][$index]">
 											</md-input-container>
 										</div>
 									</div>
-
 								</div>
+								<md-input-container ng-if="isArr(ix)" ng-repeat="val3 in ix track by $index">
+									<input ng-model="user[val][$parent.$index][$index]">
+								</md-input-container>
+							</md-card>
+							<div style="height: 70px;vmargin-top: 1.6em;">
+								<md-button class="md-fab" style="float:right">
+									<span class="icon ion-plus selectable" style="z-index:1; color: white;"></span>
+								</md-button>
 							</div>
-							<md-input-container ng-if="isArr(ix)" ng-repeat="val3 in ix track by $index">
-								<input ng-model="val3">
-							</md-input-container>
 						</div>
-
 					</div>
 				</div>
 			</div>

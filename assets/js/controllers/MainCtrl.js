@@ -204,7 +204,7 @@ angular.module('ambrosia').controller('MainCtrl',
       "languages" : [
       {
         "language" : "Elementary French and Spanish",
-        "level" : ""
+        "level" : "5"
       }],
       "extracurricular" : [],
       "governance" : [
@@ -268,7 +268,7 @@ angular.module('ambrosia').controller('MainCtrl',
         ]
       },
       {
-        name : 'Skills',
+        name : 'Talents',
         cats : [
 //          'writing',
 //          'reading',
@@ -280,15 +280,16 @@ angular.module('ambrosia').controller('MainCtrl',
       {
         name : 'Accolades / Interests',
         cats : [
+          'service',
           'projects',
 //          'social',
-          'affiliation',
+//          'affiliation',
 //          'interests',
 //          'recognition',
 //          'extracurricular',
 //          'governance',
 //          'disposition',
-          'service',
+//          'service',
         ]
       },
     ]
@@ -303,6 +304,10 @@ angular.module('ambrosia').controller('MainCtrl',
 
     $scope.isObject = function(obj) {
       return obj !== null && typeof obj === 'object'
+    }
+
+    $scope.submit = function() {
+      console.log($scope.user)
     }
 
     $scope.selected = 0
