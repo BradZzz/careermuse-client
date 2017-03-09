@@ -257,13 +257,6 @@ angular.module('ambrosia').controller('MainCtrl',
 
     ***/
 
-    {
-      "language" : "Elementary French and Spanish",
-      "level" : "5"
-    }
-
-    
-
     $scope.categories = [
       {
         name : 'Personal',

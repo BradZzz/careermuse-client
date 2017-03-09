@@ -55,6 +55,9 @@ gulp.task('minify', function() {
         }))
         .pipe($.useref())
         .pipe(gulpif('*.js', $.uglify()))
+        .on('error', function(){
+          //do whatever here
+        })
         .pipe(gulpif('*.css', $.minifyCss({processImport: false})))
         .pipe(gulp.dest('dist'))
 })
