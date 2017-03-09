@@ -36,9 +36,9 @@ var templateConfig = {
 }
 
 //if (app.get('prod')) {
-  templateConfig.partialsDir = path.join(__dirname, 'dist')
+//  templateConfig.partialsDir = path.join(__dirname, 'dist')
 //} else {
-//  templateConfig.partialsDir = __dirname
+  templateConfig.partialsDir = __dirname
 //}
 
 app.engine('html', exphbs(templateConfig))

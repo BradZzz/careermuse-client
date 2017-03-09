@@ -76,12 +76,12 @@ gulp.task('img', function() {
 
 gulp.task('partials', function () {
   return gulp.src(paths.html)
-//    .pipe($.minifyHtml({
-//      comments: true,
-//      empty: true,
-//      spare: true,
-//      quotes: true
-//    }))
+    .pipe($.minifyHtml({
+      comments: true,
+      empty: true,
+      spare: true,
+      quotes: true
+    }))
     .pipe(gulp.dest("dist/assets/html"))
     .pipe($.size())
 })
