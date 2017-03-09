@@ -251,11 +251,11 @@ angular.module('ambrosia').controller('MainCtrl',
       "order" : ",Summary,Skills,Employment,Education,Projects,Interests,Languages,Recognition,Governance,Volunteering,Speaking,Writing,Disposition"
     }
 
-    function copy(item) {
-      return JSON.parse(JSON.stringify(item))
-    }
+    /***
 
-    var backup = copy($scope.user)
+    The highlighted categories seemed to be the important ones. Uncomment to put other categories back in.
+
+    ***/
 
     $scope.categories = [
       {
@@ -300,6 +300,8 @@ angular.module('ambrosia').controller('MainCtrl',
       },
     ]
 
+    $scope.selected = 0
+
     $scope.select = function(pick){
       $scope.selected = pick
     }
@@ -313,33 +315,22 @@ angular.module('ambrosia').controller('MainCtrl',
     }
 
     $scope.submit = function() {
-      console.log($scope.user)
-      alert(JSON.stringify($scope.user))
-    }
-
-    $scope.clear = function(base) {
-      var nBase = {}
-      for (var key in base) {
-        if (base.hasOwnProperty(key)) {
-          if (this.isArr(base[key])) {
-            if (base[key].length > 0) {
-              nBase[key] = [this.clear(base[key][0])]
-            } else {
-              nBase[key] = ""
-            }
-          } else if (this.isObject(base[key])) {
-            nBase[key] = this.clear(base[key])
-          } else {
-            nBase[key] = ""
-          }
-        }
-      }
-      return nBase
+      var x = window.open()
+      x.document.open()
+      x.document.write(
+        JSON.stringify(
+         {
+           "before" : backup,
+           "after" : $scope.user,
+         }
+        )
+      )
+      x.document.close()
     }
 
     $scope.create = function(item) {
       if (this.isObject(item[0])) {
-        item.push(this.clear(item[0]))
+        item.push(clear(item[0]))
       } else {
         item.push("")
       }
@@ -355,7 +346,31 @@ angular.module('ambrosia').controller('MainCtrl',
       }
     }
 
-    $scope.selected = 0
+    function copy(item) {
+      return JSON.parse(JSON.stringify(item))
+    }
+
+    function clear(base) {
+      var nBase = {}
+      for (var key in base) {
+        if (base.hasOwnProperty(key)) {
+          if ($scope.isArr(base[key])) {
+            if (base[key].length > 0) {
+              nBase[key] = [clear(base[key][0])]
+            } else {
+              nBase[key] = ""
+            }
+          } else if ($scope.isObject(base[key])) {
+            nBase[key] = clear(base[key])
+          } else {
+            nBase[key] = ""
+          }
+        }
+      }
+      return nBase
+    }
+
+    var backup = copy($scope.user)
 
 
 }])

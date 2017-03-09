@@ -554,18 +554,17 @@ form .progress {
   padding: 1em;
   opacity: 1;
 }
-
-.tiny-padding {
-  padding : 1em;
-}
 .tiny-margin {
-  margin-left : 1em;
+  margin-left: 1em;
+}
+.tiny-padding {
+  padding: 1em;
 }
 .large-margin {
-  margin-left : 3em;
+  margin-left: 3em;
 }
 .full {
-  width: 95%;
+  width: 100%;
 }
 .half-flex {
   width: 45%;
