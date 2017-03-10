@@ -3,7 +3,7 @@
 		<md-card style="height:98vh" layout="column">
 			<!--<div se-collapse se-collapse-cards="user"></div>-->
 			<div layout="row" flex style="align-items: center; height: 100%;">
-				<div flex="20" style="background:#673AB7; height: 100%; position: relative;">
+				<div flex="20" style="height: 100%; position: relative;" class="prime">
 					<md-list flex>
 						<md-subheader class="md-no-sticky">{{ user.name }}</md-subheader>
 						<md-list-item class="md-2-line" ng-repeat="cat in categories track by $index" ng-click="select($index)" style="border: 1px #000000 solid;">
