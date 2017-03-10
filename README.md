@@ -1,4 +1,4 @@
-## Ambrosia
+## CareerMuse Client
 
 ### Frameworks / Libraries
 * NodeJS
@@ -6,35 +6,27 @@
 * LESS
 * Gulp
 * Material Design
-* S3
 
 ### Description
 
-A malleable framework allowing a user to quickly create their own website with a complete content management system. The site includes a login and user settings page along with functional S3 integration for users to upload profile information and files to the website's server. Check out screens of just a few instances of this framework being used in production!
+A quick client CMS for Careermuse's resume builder site.
 
 ### Install
 
 1. `npm install`
 
-2. `bower install`
+2. `npm start`
 
-3. `npm start`
+3. navigate to localhost:3000 in your browser
 
-4. navigate to localhost:3000 in your browser
+### Demo
 
-### DotDash.tv Screens
+[Demo](https://shielded-citadel-61095.herokuapp.com/)
 
-<img src="./screens/ark01.png" width="400"/>
-<img src="./screens/ark02.png" width="400"/>
-<img src="./screens/ark03.png" width="400"/>
+### Client Screens
 
-### HopShares.com Screens
-
-<img src="./screens/hopshares01.png" width="400"/>
-<img src="./screens/hopshares02.png" width="400"/>
-<img src="./screens/hopshares03.png" width="400"/>
-<img src="./screens/hopshares04.png" width="400"/>
-<img src="./screens/hopshares05.png" width="400"/>
+<img src="./screens/screen01.png" width="400"/>
+<img src="./screens/screen02.png" width="400"/>
 
 #### license
 
