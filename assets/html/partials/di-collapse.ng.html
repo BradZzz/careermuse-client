@@ -1,0 +1,19 @@
+<div class="se-collapse">
+
+  <md-input-container>
+    <label>Name</label>
+    <input ng-model="cards.name">
+  </md-input-container>
+
+  <div ng-repeat="cat in categories" class="collapse-card" ng-class="{ active: cat.$active }">
+    <div class="collapse-card__heading" ng-click="cat.$active = !cat.$active">
+      <div class="collapse-card__title">
+        <i class="fa {{ cat.icon }} fa-2x fa-fw"></i> {{ cat.name }}
+      </div>
+    </div>
+    <div ng-repeat="val in cat.cats" class="collapse-card__body">
+      <h3>{{ val }}</h3>
+      {{ cards[val] }}
+    </div>
+  </div>
+</div>
