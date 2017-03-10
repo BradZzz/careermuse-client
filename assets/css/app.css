@@ -31,6 +31,9 @@ body {
   left: 0;
   bottom: 0;
 }
+.prime {
+  background: #702070;
+}
 .rounded {
   border-radius: 5px;
   background: #082742;

@@ -15,7 +15,7 @@
 						<md-button ng-click="submit()" style="border: 1px #000000 solid; color:white; background: #FF5722; position: absolute; bottom: 0; left: 0; width: 100%; margin: 0; height: 5em;">Save</md-button>
 					</md-list>
 				</div>
-				<div flex="80" style="color: #212121; background: white; height: 100%; padding: 10px 50px; overflow-y: auto;">
+				<div flex="80" style="background: white; height: 100%; padding: 10px 50px; overflow-y: auto;">
 					<h1>{{ categories[selected].name }}</h1>
 					<div class="tiny-margin" ng-repeat="val in categories[selected].cats track by $index">
 						<h2>{{ val.capitalizeFirstLetter() }}</h2>
@@ -43,7 +43,7 @@
 										</md-input-container>
 									</div>
 
-									<div ng-if="isObject(item) && !isArr(item)" style="padding-left:2em" ng-repeat="(keya,val3) in item track by $index">
+									<div ng-if="isObject(item) && !isArr(item)" class="large-padding" ng-repeat="(keya,val3) in item track by $index">
 										<md-input-container class="full">
 											<label>{{ keya }}</label>
 											<input ng-model="user[val][key2][$parent.$parent.$index][keya]">
@@ -69,7 +69,7 @@
 								</md-button>
 
 								<!-- user[val][$parent.$index] -->
-								<div ng-if="isObject(ix) && !isArr(ix)" ng-repeat="(key3,val3) in ix" style="padding-left:2em">
+								<div ng-if="isObject(ix) && !isArr(ix)" ng-repeat="(key3,val3) in ix" class="large-padding">
 									<md-input-container class="full" ng-if="!isObject(val3) && !isArr(val3)">
 										<label>{{ key3 }}</label>
 										<input ng-model="user[val][$parent.$parent.$parent.$index][key3]">
@@ -106,7 +106,7 @@
 								</md-input-container>
 							</md-card>
 						</div>
-						<div style="height: 70px;vmargin-top: 1.6em;" ng-if="isArr(user[val]) && ix.length > 0">
+						<div style="height: 70px;vmargin-top: 1.6em;" ng-if="isArr(user[val]) && user[val].length > 0">
 							<md-button class="md-fab" style="float:right" ng-click="create(user[val])">
 								<span class="icon ion-plus selectable" style="z-index:1; color: white;"></span>
 							</md-button>
