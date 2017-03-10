@@ -6,13 +6,13 @@
 				<div flex="20" style="height: 100%; position: relative;" class="prime">
 					<md-list flex>
 						<md-subheader class="md-no-sticky">{{ user.name }}</md-subheader>
-						<md-list-item class="md-2-line" ng-repeat="cat in categories track by $index" ng-click="select($index)" style="border: 1px #000000 solid;">
+						<md-list-item class="md-2-line border-flat" ng-repeat="cat in categories track by $index" ng-click="select($index)">
 							<div class="md-list-item-text" layout="column">
 								<h3 style="color:white">{{ cat.name }}</h3>
 							</div>
 						</md-list-item>
-						<md-button ng-click="reset()" style="border: 1px #000000 solid; color:white; background: rgba(0,0,0,.2); position: absolute; bottom: 5em; left: 0; width: 100%; margin: 0; height: 5em;">Reset</md-button>
-						<md-button ng-click="submit()" style="border: 1px #000000 solid; color:white; background: #FF5722; position: absolute; bottom: 0; left: 0; width: 100%; margin: 0; height: 5em;">Save</md-button>
+						<md-button ng-click="reset()" style="bottom: 5em !important" class="btnFull overlay border-flat">Reset</md-button>
+						<md-button ng-click="submit()" class="btnFull second border-flat">Next</md-button>
 					</md-list>
 				</div>
 				<div flex="80" style="background: white; height: 100%; padding: 10px 50px; overflow-y: auto;">
@@ -43,7 +43,7 @@
 										</md-input-container>
 									</div>
 
-									<div ng-if="isObject(item) && !isArr(item)" class="large-padding" ng-repeat="(keya,val3) in item track by $index">
+									<div ng-if="isObject(item) && !isArr(item)" class="tiny-padding" ng-repeat="(keya,val3) in item track by $index">
 										<md-input-container class="full">
 											<label>{{ keya }}</label>
 											<input ng-model="user[val][key2][$parent.$parent.$index][keya]">
@@ -69,7 +69,7 @@
 								</md-button>
 
 								<!-- user[val][$parent.$index] -->
-								<div ng-if="isObject(ix) && !isArr(ix)" ng-repeat="(key3,val3) in ix" class="large-padding">
+								<div ng-if="isObject(ix) && !isArr(ix)" ng-repeat="(key3,val3) in ix" class="tiny-padding">
 									<md-input-container class="full" ng-if="!isObject(val3) && !isArr(val3)">
 										<label>{{ key3 }}</label>
 										<input ng-model="user[val][$parent.$parent.$parent.$index][key3]">

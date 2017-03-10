@@ -5,7 +5,9 @@
 
 /* Hues Using */
 @hue-primary: #702070;
-@hue-5:   #082742;
+@hue-secondary: #FF5722;
+
+@hue-overlay: rgba(0,0,0,.2);
 
 body {
   .sesh-font();
@@ -27,13 +29,29 @@ html, body {
 }
 
 .prime {
-  background: @hue-primary;
+  background: @hue-primary !important;
 }
 
-.rounded {
-    border-radius: 5px;
-    background: @hue-5;
-    padding: 6px;
+.second {
+  background: @hue-secondary !important;
+}
+
+.overlay {
+  background: @hue-overlay !important;
+}
+
+.btnFull {
+  color:white !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  height: 5em !important;
+}
+
+.border-flat {
+    border: 1px #000000 solid !important;
 }
 
 .selectable {
@@ -145,6 +163,9 @@ form .progress {
 }
 .large-margin {
   margin-left : 3em;
+}
+.large-padding {
+  padding : 3em;
 }
 .full {
   width: 100%;
